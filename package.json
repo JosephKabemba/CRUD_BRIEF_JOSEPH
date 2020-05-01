@@ -1,0 +1,12 @@
+{
+  "name": "crud_ajax_brief_final",
+  "version": "1.0.0",
+  "description": "\"Brief CRUD KDA\"",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joseph Kabemba",
+  "license": "ISC",
+  "type": "module"
+}
