@@ -45,17 +45,9 @@ class GUI {
           <td>${employe.poste}</td>
           <td>${employe.numeroTelephone}</td>
           <td>${employe.estMarie}</td>
-          <td>${employe.pays}</td>
-
-          
+          <td>${employe.pays}</td>          
       `;
     liste.appendChild(enregistrement);
-  }
-
-  static supprimerEmploye(el) {
-    if (el.classList.contains("btnSupprimer")) {
-      el.parentElement.parentElement.remove();
-    }
   }
 
   static reinitialiserLeFormulaire() {
@@ -73,7 +65,6 @@ class GUI {
 }
 
 //Classe Stockage
-
 class Stockage {
   static getEmployes() {
     let employes;
