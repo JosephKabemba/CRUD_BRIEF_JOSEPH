@@ -20,7 +20,12 @@
     <h1>Mapendo SARL</h1>
     <div class="conteneur">
       <div class="formulaire">
-        <form id="formulaireEmploye" autocomplete>
+        <form
+          class="needs-validation"
+          id="formulaireEmploye"
+          novalidate
+          autocomplete
+        >
           <h2>Formulaire</h2>
           <div class="input-group mb-2">
             <div class="input-group-prepend">
@@ -38,13 +43,16 @@
             <div class="input-group-prepend">
               <span class="input-group-text"><i class="fas fa-user"></i></span>
               <input
-                
                 type="text"
-                id="nom"
+                id="nom validationTooltip05"
                 name="nom"
                 class="form-control"
                 placeholder="Nom"
+                required
               />
+              <div class="invalid-tooltip">
+                Veuillez saisir un nom
+              </div>
             </div>
           </div>
           <div class="input-group mb-2">
@@ -56,7 +64,11 @@
                 name="prenom"
                 class="form-control"
                 placeholder="Prénom"
+                required
               />
+              <div class="invalid-tooltip">
+                Veuillez saisir un prénom
+              </div>
             </div>
           </div>
           <div class="input-group mb-2">
@@ -68,7 +80,11 @@
                 name="email"
                 class="form-control"
                 placeholder="Email"
+                required
               />
+              <div class="invalid-tooltip">
+                Veuillez saisir un email valide
+              </div>
             </div>
           </div>
           <div class="input-group mb-2">
@@ -96,7 +112,11 @@
                 name="poste"
                 class="form-control"
                 placeholder="Poste"
+                required
               />
+              <div class="invalid-tooltip">
+                Veuillez renseigner un poste
+              </div>
             </div>
           </div>
           <div class="input-group mb-2">
@@ -110,7 +130,11 @@
                 name="numeroTelephone"
                 class="form-control"
                 placeholder="Téléphone"
+                required
               />
+              <div class="invalid-tooltip">
+                Veuillez saisir un numéro
+              </div>
             </div>
           </div>
           <div class="input-group mb-2">
@@ -118,20 +142,28 @@
               <span class="input-group-text"
                 ><i class="fas fa-user-friends"></i
               ></span>
-              <select name="estMarie" id="estMarie" class="form-control">
+              <select
+                name="estMarie"
+                id="estMarie"
+                class="form-control"
+                required
+              >
                 <option value="" selected>Statut marital</option>
                 <option value="celibaire">Célibataire</option>
                 <option value="marie">Marié(e)</option>
                 <option value="divorce">Divorcé(e)</option>
                 <option value="veuf">Veuf(ve)</option>
               </select>
+              <div class="invalid-tooltip">
+                Veuillez saisir un statut
+              </div>
             </div>
           </div>
 
           <div class="input-group mb-2">
             <div class="input-group-prepend">
               <span class="input-group-text"><i class="fas fa-home"></i></span>
-              <select name="pays" id="pays" class="form-control">
+              <select name="pays" id="pays" class="form-control" required>
                 <option value="" selected>Pays d'origine</option>
                 <option value="Afganistan">Afghanistan</option>
                 <option value="Albania">Albania</option>
@@ -402,9 +434,17 @@
                 <option value="Zambia">Zambia</option>
                 <option value="Zimbabwe">Zimbabwe</option>
               </select>
+              <div class="invalid-tooltip">
+                Veuillez renseigner un pays
+              </div>
             </div>
           </div>
-          <button type="submit" value="Enregistrer" class="btn btn-primary" id="btnAjouter">
+          <button
+            type="submit"
+            value="Enregistrer"
+            class="btn btn-primary"
+            id="btnAjouter"
+          >
             Ajouter
           </button>
         </form>
