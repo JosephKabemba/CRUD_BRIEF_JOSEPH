@@ -36,18 +36,10 @@ class Employe {
           <td>${employe.numeroTelephone}</td>
           <td>${employe.estMarie}</td>
           <td>${employe.pays}</td>
-
-          
       `;
       liste.appendChild(enregistrement);
     }
-  
-    static supprimerEmploye(el) {
-      if (el.classList.contains("btnSupprimer")) {
-        el.parentElement.parentElement.remove();
-      }
-    }
-  
+
     static reinitialiserLeFormulaire() {
       document.querySelector("#id").value = "";
       document.querySelector("#nom").value = "";
@@ -63,7 +55,6 @@ class Employe {
   }
   
   //Classe Stockage
-  
   class Stockage {
     static getEmployes() {
       let employes;
