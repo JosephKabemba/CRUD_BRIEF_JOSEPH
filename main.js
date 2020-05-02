@@ -28,7 +28,6 @@ class Employe {
 class GUI {
   static afficherEmployes() {
     const employes = Stockage.getEmployes();
-
     employes.forEach((employe) => GUI.ajouterDansLaListe(employe));
   }
 
@@ -103,51 +102,69 @@ document.querySelector("#formulaireEmploye").addEventListener("submit", (e) => {
   const estMarie = document.querySelector("#estMarie").value;
   const pays = document.querySelector("#pays").value;
 
-  //Création d'un object Employe
-  const employe = new Employe(
-    id,
-    nom,
-    prenom,
-    email,
-    age,
-    poste,
-    numeroTelephone,
-    estMarie,
-    pays
+  const messageDerreur = document.querySelector("#messageDerreur");
+  messageDerreur.setAttribute(
+    "style",
+    "background-color: tomato; color:white; border-radius: 10%; padding: 2%; margin-bottom: 1px"
   );
+  setTimeout(() => {
+    document.querySelector("#messageDerreur").textContent = "";
+    messageDerreur.setAttribute("style", "padding: 0");
+  }, 3000);
 
-  //Ajouter l'employé dans l'interface (GUI)
-  GUI.ajouterDansLaListe(employe);
+  if (nom === "") {
+    messageDerreur.textContent = `Le nom ne peut pas être vide`;
+    document.querySelector("#nom").focus();
+    return false;
+  } else if (prenom === "") {
+    messageDerreur.textContent = `Le prénom ne peut pas être vide`;
+    document.querySelector("#prenom").focus();
+    return false;
+  } else if (email === "" || estUnEmail(email) === false) {
+    messageDerreur.textContent = `Renseigner un email valide`;
+    document.querySelector("#email").focus();
+    return false;
+  } else if (poste === "") {
+    messageDerreur.textContent = `Veuiller renseigner un poste`;
+    document.querySelector("#poste").focus();
+    return false;
+  } else if (isNaN(numeroTelephone) || numeroTelephone.length != 10) {
+    messageDerreur.textContent = `Renseigner un numéro de téléphone valide`;
+    document.querySelector("#numeroTelephone").focus();
+  } else if (estMarie === "" || estMarie === null) {
+    messageDerreur.textContent = `Veuillez renseigner un statut marital`;
+    document.querySelector("#estMarie").focus();
+    return false;
+  } else if (pays === "") {
+    messageDerreur.textContent = `Veuillez indiquer le pays d'origine`;
+    document.querySelector("#pays").focus();
+    return false;
+  } else {
+    //Création d'un object Employe
+    const employe = new Employe(
+      id,
+      nom,
+      prenom,
+      email,
+      age,
+      poste,
+      numeroTelephone,
+      estMarie,
+      pays
+    );
 
-  //Ajouter l'employé dans le local storage
-  Stockage.ajouterEmploye(employe);
+    //Ajouter l'employé dans l'interface (GUI)
+    GUI.ajouterDansLaListe(employe);
 
-  GUI.reinitialiserLeFormulaire();
+    //Ajouter l'employé dans le local storage
+    Stockage.ajouterEmploye(employe);
+
+    GUI.reinitialiserLeFormulaire();
+  }
 });
 
-//Validation du formulaire
-(function () {
-  "use strict";
-  window.addEventListener(
-    "load",
-    function () {
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      let forms = document.getElementsByClassName("needs-validation");
-      // Loop over them and prevent submission
-      let validation = Array.prototype.filter.call(forms, function (form) {
-        form.addEventListener(
-          "submit",
-          function (event) {
-            if (form.checkValidity() === false) {
-              event.preventDefault();
-              event.stopPropagation();
-            }
-            form.classList.add("was-validated");
-          },
-          false
-        );
-      });
-    },
-    false
+function estUnEmail(email) {
+  return /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/.test(
+    email
   );
-})();
+}

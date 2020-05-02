@@ -21,12 +21,12 @@
     <div class="conteneur">
       <div class="formulaire">
         <form
-          class="needs-validation"
+          
           id="formulaireEmploye"
-          novalidate
           autocomplete
         >
-          <h2>Formulaire</h2>
+          <h3 class="titreFormulaire">Formulaire</h3>
+          <div id="messageDerreur"></div>
           <div class="input-group mb-2">
             <div class="input-group-prepend">
               <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -44,15 +44,11 @@
               <span class="input-group-text"><i class="fas fa-user"></i></span>
               <input
                 type="text"
-                id="nom validationTooltip05"
+                id="nom"
                 name="nom"
                 class="form-control"
                 placeholder="Nom"
-                required
               />
-              <div class="invalid-tooltip">
-                Veuillez saisir un nom
-              </div>
             </div>
           </div>
           <div class="input-group mb-2">
@@ -64,11 +60,7 @@
                 name="prenom"
                 class="form-control"
                 placeholder="Prénom"
-                required
               />
-              <div class="invalid-tooltip">
-                Veuillez saisir un prénom
-              </div>
             </div>
           </div>
           <div class="input-group mb-2">
@@ -80,11 +72,7 @@
                 name="email"
                 class="form-control"
                 placeholder="Email"
-                required
               />
-              <div class="invalid-tooltip">
-                Veuillez saisir un email valide
-              </div>
             </div>
           </div>
           <div class="input-group mb-2">
@@ -112,11 +100,7 @@
                 name="poste"
                 class="form-control"
                 placeholder="Poste"
-                required
               />
-              <div class="invalid-tooltip">
-                Veuillez renseigner un poste
-              </div>
             </div>
           </div>
           <div class="input-group mb-2">
@@ -130,11 +114,7 @@
                 name="numeroTelephone"
                 class="form-control"
                 placeholder="Téléphone"
-                required
               />
-              <div class="invalid-tooltip">
-                Veuillez saisir un numéro
-              </div>
             </div>
           </div>
           <div class="input-group mb-2">
@@ -146,7 +126,7 @@
                 name="estMarie"
                 id="estMarie"
                 class="form-control"
-                required
+                placeholder="Statut Marital"
               >
                 <option value="" selected>Statut marital</option>
                 <option value="celibaire">Célibataire</option>
@@ -154,16 +134,18 @@
                 <option value="divorce">Divorcé(e)</option>
                 <option value="veuf">Veuf(ve)</option>
               </select>
-              <div class="invalid-tooltip">
-                Veuillez saisir un statut
-              </div>
             </div>
           </div>
 
           <div class="input-group mb-2">
             <div class="input-group-prepend">
               <span class="input-group-text"><i class="fas fa-home"></i></span>
-              <select name="pays" id="pays" class="form-control" required>
+              <select
+                name="pays"
+                id="pays"
+                class="form-control"
+                placeholder="pays d'origine"
+              >
                 <option value="" selected>Pays d'origine</option>
                 <option value="Afganistan">Afghanistan</option>
                 <option value="Albania">Albania</option>
@@ -434,9 +416,6 @@
                 <option value="Zambia">Zambia</option>
                 <option value="Zimbabwe">Zimbabwe</option>
               </select>
-              <div class="invalid-tooltip">
-                Veuillez renseigner un pays
-              </div>
             </div>
           </div>
           <button
@@ -451,7 +430,7 @@
       </div>
 
       <div class="tableau">
-        <h2>Liste des employés</h2>
+        <h3>Liste des employés</h3>
         <table class="table table-striped table-dark">
           <thead class="thead-dark">
             <tr>
