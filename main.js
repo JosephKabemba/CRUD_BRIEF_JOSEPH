@@ -44,7 +44,8 @@ class GUI {
           <td>${employe.poste}</td>
           <td>${employe.numeroTelephone}</td>
           <td>${employe.estMarie}</td>
-          <td>${employe.pays}</td>          
+          <td>${employe.pays}</td> 
+          <td><i class="fas fa-trash-alt btnSupprimer"></i></td>         
       `;
     liste.appendChild(enregistrement);
   }
@@ -60,6 +61,12 @@ class GUI {
     document.querySelector("#estMarie").value = "";
     document.querySelector("#pays").value = "";
     document.querySelector("#id").focus();
+  }
+
+  static supprimerEmploye(el) {
+    if (el.classList.contains("btnSupprimer")) {
+      el.parentElement.parentElement.remove();
+    }
   }
 }
 
@@ -79,6 +86,17 @@ class Stockage {
   static ajouterEmploye(employe) {
     const employes = Stockage.getEmployes();
     employes.push(employe);
+    localStorage.setItem("employes", JSON.stringify(employes));
+  }
+
+  static supprimerEmploye(id) {
+    const employes = Stockage.getEmployes();
+    employes.forEach((employe, indice) => {
+      if (employe.id === id) {
+        employes.splice(indice, 1);
+      }
+    });
+
     localStorage.setItem("employes", JSON.stringify(employes));
   }
 }
@@ -168,3 +186,16 @@ function estUnEmail(email) {
     email
   );
 }
+
+
+//Supprimer un employé
+document.querySelector("#listeEmployes").addEventListener("click", (e) => {
+  if (confirm("Etes-vous sûr de vouloir supprimer cet employé de la liste ?")) {
+    //Supprimer l'employé de l'interface (GUI)
+    GUI.supprimerEmploye(e.target);
+    
+    //Supprimer l'employé du Local storage
+    const id = e.target.parentElement.parentElement.childNodes[1].textContent;
+    Stockage.supprimerEmploye(id);
+  }
+});

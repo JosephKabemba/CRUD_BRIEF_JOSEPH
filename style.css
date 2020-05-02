@@ -45,3 +45,8 @@ h1 {
 .tableau > h3 {
   text-align: center;
 }
+
+.btnSupprimer{
+  color: tomato;
+  cursor: pointer;
+}
