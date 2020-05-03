@@ -30,8 +30,13 @@ class Employe {
 //taches sur l'interface (le front)
 class GUI {
   static afficherEmployes() {
-    const employes = Stockage.getEmployes();
-    employes.forEach((employe) => GUI.ajouterDansLaListe(employe));
+    // const employes = Stockage.getEmployes();
+    // employes.forEach((employe) => GUI.ajouterDansLaListe(employe));
+    fetch("http://167.71.45.243:4000/api/employes?api_key=idgfxis")
+      .then((response) => response.json())
+      .then((data) => {
+        data.forEach((employe) => GUI.ajouterDansLaListe(employe));
+      });
   }
 
   static ajouterDansLaListe(employe) {
@@ -39,7 +44,7 @@ class GUI {
     const enregistrement = document.createElement("tr");
 
     enregistrement.innerHTML = `
-          <td>${employe.id}</td>
+          <td>${employe._id}</td>
           <td>${employe.nom}</td>
           <td>${employe.prenom}</td>
           <td>${employe.email}</td>
@@ -67,7 +72,7 @@ class GUI {
 
   static donneeEmployeFormulaire() {
     let employe = {};
-    employe["id"] = document.querySelector("#id").value;
+    employe["_id"] = document.querySelector("#id").value;
     employe["nom"] = document.querySelector("#nom").value;
     employe["prenom"] = document.querySelector("#prenom").value;
     employe["email"] = document.querySelector("#email").value;
