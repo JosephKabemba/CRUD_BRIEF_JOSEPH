@@ -261,6 +261,24 @@ document.querySelector("#formulaireEmploye").addEventListener("submit", (e) => {
       ligneSélectionnée.children[7].textContent = GUI.donneeEmployeFormulaire().estMarie;
       ligneSélectionnée.children[8].textContent = GUI.donneeEmployeFormulaire().pays;
       
+      fetch(`http://167.71.45.243:4000/api/employes/${id}?api_key=idgfxis`, {
+        method: "Put",
+        body: JSON.stringify({
+          nom: GUI.donneeEmployeFormulaire().nom,
+          prenom: GUI.donneeEmployeFormulaire().prenom,
+          email: GUI.donneeEmployeFormulaire().email,
+          poste: GUI.donneeEmployeFormulaire().poste,
+          numeroTelephone: GUI.donneeEmployeFormulaire().numeroTelephone,
+          estMarie: GUI.donneeEmployeFormulaire().estMarie === "Marié(e)",
+          pays: GUI.donneeEmployeFormulaire().pays
+        }),
+        headers: { "Content-type": "application/json" },
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data));
+
+
+
 
       btnAjouter.textContent = "Ajouter";
       GUI.reinitialiserLeFormulaire();
