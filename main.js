@@ -131,12 +131,23 @@ document.querySelector("#listeEmployes").addEventListener("click", (e) => {
       confirm("Etes-vous sûr de vouloir supprimer cet employé de la liste ?")
     ) {
       //Supprimer l'employé de l'interface (GUI)
-
       GUI.supprimerEmploye(e.target);
 
       //Supprimer l'employé du Local storage
       const id = e.target.parentElement.parentElement.childNodes[1].textContent;
       Stockage.supprimerEmploye(id);
+
+        //supprimer l'employé de l'API
+  // const id = e.target.parentElement.parentElement.childNodes[1].textContent;
+  fetch(
+    `http://167.71.45.243:4000/api/employes/${id}?api_key=idgfxis`,
+    { method: "Delete" }
+  )
+    .then((response) => response.json())
+    .then((data) => {
+          console.log(data);
+    });
+
     }
   }
 
