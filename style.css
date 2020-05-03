@@ -14,6 +14,7 @@ body {
 
 .conteneur {
   display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
   padding: 1%;
   width: 100%;
@@ -21,6 +22,7 @@ body {
 }
 
 h1 {
+  letter-spacing: 0.5em;
   text-align: center;
 }
 
@@ -41,16 +43,23 @@ h1 {
   border-bottom-right-radius: 20%;
 }
 
-.tableau > h2 {
+.tableau > h3 {
   text-align: center;
 }
 
-/* .btnSupprimer{
-    color: tomato;
-    cursor: pointer;
+.btnSupprimer{
+  color: tomato;
+  cursor: pointer;
 }
 
 .btnModifier{
-    color: #7468a0;
-    cursor: pointer;
-} */
+  cursor: pointer;
+}
+
+/* Changement de la couleur d'arrière-plan par défaut de Bootstrap au 
+   survol de la souris
+*/
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #7468a0;
+}
