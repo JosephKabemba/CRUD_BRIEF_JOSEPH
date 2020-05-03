@@ -247,7 +247,6 @@ document.querySelector("#formulaireEmploye").addEventListener("submit", (e) => {
 
       //Ajouter l'employé dans le local storage
       Stockage.ajouterEmploye(employe);
-
       GUI.reinitialiserLeFormulaire();
     }
 
