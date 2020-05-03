@@ -154,12 +154,6 @@ document.querySelector("#listeEmployes").addEventListener("click", (e) => {
   }
 });
 
-
-
-
-
-
-
 //Ajouter un employé
 document.querySelector("#formulaireEmploye").addEventListener("submit", (e) => {
   //Annuler le comportement par défaut du submit
@@ -251,6 +245,7 @@ document.querySelector("#formulaireEmploye").addEventListener("submit", (e) => {
       ligneSélectionnée.children[7].textContent = GUI.donneeEmployeFormulaire().estMarie;
       ligneSélectionnée.children[8].textContent = GUI.donneeEmployeFormulaire().pays;
       
+
       btnAjouter.textContent = "Ajouter";
       GUI.reinitialiserLeFormulaire();
       
