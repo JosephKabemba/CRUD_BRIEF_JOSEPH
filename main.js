@@ -1,4 +1,7 @@
 //Création de la classe Employe
+let ligneSélectionnée;
+let i;
+
 class Employe {
   constructor(
     id,
@@ -45,21 +48,14 @@ class GUI {
           <td>${employe.numeroTelephone}</td>
           <td>${employe.estMarie}</td>
           <td>${employe.pays}</td> 
+          <td><i class="fas fa-edit btnModifier text-primary"></i></td>
           <td><i class="fas fa-trash-alt btnSupprimer"></i></td>         
       `;
     liste.appendChild(enregistrement);
   }
 
   static reinitialiserLeFormulaire() {
-    document.querySelector("#id").value = "";
-    document.querySelector("#nom").value = "";
-    document.querySelector("#prenom").value = "";
-    document.querySelector("#email").value = "";
-    document.querySelector("#age").value = "";
-    document.querySelector("#poste").value = "";
-    document.querySelector("#numeroTelephone").value = "";
-    document.querySelector("#estMarie").value = "";
-    document.querySelector("#pays").value = "";
+    document.querySelector('#formulaireEmploye').reset();
     document.querySelector("#id").focus();
   }
 
@@ -67,6 +63,22 @@ class GUI {
     if (el.classList.contains("btnSupprimer")) {
       el.parentElement.parentElement.remove();
     }
+  }
+
+  static donneeEmployeFormulaire() {
+    let employe = {};
+    employe["id"] = document.querySelector("#id").value;
+    employe["nom"] = document.querySelector("#nom").value;
+    employe["prenom"] = document.querySelector("#prenom").value;
+    employe["email"] = document.querySelector("#email").value;
+    employe["age"] = document.querySelector("#age").value;
+    employe["poste"] = document.querySelector("#poste").value;
+    employe["numeroTelephone"] = document.querySelector(
+      "#numeroTelephone"
+    ).value;
+    employe["estMarie"] = document.querySelector("#estMarie").value;
+    employe["pays"] = document.querySelector("#pays").value;
+    return employe;
   }
 }
 
@@ -104,6 +116,50 @@ class Stockage {
 //Afficher tous les employés au chargement du document
 document.addEventListener("DOMContentLoaded", GUI.afficherEmployes);
 
+const btnAjouter = document.querySelector("#btnAjouter");
+
+
+//Supprimer un employé
+document.querySelector("#listeEmployes").addEventListener("click", (e) => {
+  if (e.target.classList.contains("btnSupprimer")) {
+    if (
+      confirm("Etes-vous sûr de vouloir supprimer cet employé de la liste ?")
+    ) {
+      //Supprimer l'employé de l'interface (GUI)
+
+      GUI.supprimerEmploye(e.target);
+
+      //Supprimer l'employé du Local storage
+      const id = e.target.parentElement.parentElement.childNodes[1].textContent;
+      Stockage.supprimerEmploye(id);
+    }
+  }
+
+  if (e.target.classList.contains("btnModifier")) {
+    function remplirFormulaire(id) {
+      return e.target.parentElement.parentElement.children[id].innerText;
+    }
+    document.querySelector("#id").value = remplirFormulaire(0);
+    document.querySelector("#nom").value = remplirFormulaire(1);
+    document.querySelector("#prenom").value = remplirFormulaire(2);
+    document.querySelector("#email").value = remplirFormulaire(3);
+    document.querySelector("#age").value = remplirFormulaire(4);
+    document.querySelector("#poste").value = remplirFormulaire(5);
+    document.querySelector("#numeroTelephone").value = remplirFormulaire(6);
+    document.querySelector("#estMarie").value = remplirFormulaire(7);
+    document.querySelector("#pays").value = remplirFormulaire(8);
+
+    btnAjouter.textContent = "Mettre à jour";
+    ligneSélectionnée = e.target.parentElement.parentElement;
+  }
+});
+
+
+
+
+
+
+
 //Ajouter un employé
 document.querySelector("#formulaireEmploye").addEventListener("submit", (e) => {
   //Annuler le comportement par défaut du submit
@@ -120,16 +176,20 @@ document.querySelector("#formulaireEmploye").addEventListener("submit", (e) => {
   const estMarie = document.querySelector("#estMarie").value;
   const pays = document.querySelector("#pays").value;
 
+  //Validation du formulaire
   const messageDerreur = document.querySelector("#messageDerreur");
   messageDerreur.setAttribute(
     "style",
-    "background-color: tomato; color:white; border-radius: 10%; padding: 2%; margin-bottom: 1px"
+    "background-color: tomato; color:white; border-radius: 10%;"
   );
+
+  //Cette instruction permet de faire disparaire le message d'erreur après 3s
   setTimeout(() => {
     document.querySelector("#messageDerreur").textContent = "";
-    messageDerreur.setAttribute("style", "padding: 0");
+    messageDerreur.setAttribute("style", "background-color: white;");
   }, 3000);
 
+  //Validation champ par champ
   if (nom === "") {
     messageDerreur.textContent = `Le nom ne peut pas être vide`;
     document.querySelector("#nom").focus();
@@ -147,7 +207,7 @@ document.querySelector("#formulaireEmploye").addEventListener("submit", (e) => {
     document.querySelector("#poste").focus();
     return false;
   } else if (isNaN(numeroTelephone) || numeroTelephone.length != 10) {
-    messageDerreur.textContent = `Renseigner un numéro de téléphone valide`;
+    messageDerreur.textContent = `Le numéro de téléphone doit contenir 10 chiffres`;
     document.querySelector("#numeroTelephone").focus();
   } else if (estMarie === "" || estMarie === null) {
     messageDerreur.textContent = `Veuillez renseigner un statut marital`;
@@ -171,13 +231,30 @@ document.querySelector("#formulaireEmploye").addEventListener("submit", (e) => {
       pays
     );
 
-    //Ajouter l'employé dans l'interface (GUI)
-    GUI.ajouterDansLaListe(employe);
+    if (btnAjouter.textContent === "Ajouter") {
+      //Ajouter l'employé dans l'interface (GUI)
+      GUI.ajouterDansLaListe(employe);
 
-    //Ajouter l'employé dans le local storage
-    Stockage.ajouterEmploye(employe);
+      //Ajouter l'employé dans le local storage
+      Stockage.ajouterEmploye(employe);
 
-    GUI.reinitialiserLeFormulaire();
+      GUI.reinitialiserLeFormulaire();
+    }
+
+    if (btnAjouter.textContent === "Mettre à jour") {
+      ligneSélectionnée.children[1].textContent = GUI.donneeEmployeFormulaire().nom;
+      ligneSélectionnée.children[2].textContent = GUI.donneeEmployeFormulaire().prenom;
+      ligneSélectionnée.children[3].textContent = GUI.donneeEmployeFormulaire().email;
+      ligneSélectionnée.children[4].textContent = GUI.donneeEmployeFormulaire().age;
+      ligneSélectionnée.children[5].textContent = GUI.donneeEmployeFormulaire().poste;
+      ligneSélectionnée.children[6].textContent = GUI.donneeEmployeFormulaire().numeroTelephone;
+      ligneSélectionnée.children[7].textContent = GUI.donneeEmployeFormulaire().estMarie;
+      ligneSélectionnée.children[8].textContent = GUI.donneeEmployeFormulaire().pays;
+      
+      btnAjouter.textContent = "Ajouter";
+      GUI.reinitialiserLeFormulaire();
+      
+    }
   }
 });
 
@@ -188,14 +265,3 @@ function estUnEmail(email) {
 }
 
 
-//Supprimer un employé
-document.querySelector("#listeEmployes").addEventListener("click", (e) => {
-  if (confirm("Etes-vous sûr de vouloir supprimer cet employé de la liste ?")) {
-    //Supprimer l'employé de l'interface (GUI)
-    GUI.supprimerEmploye(e.target);
-    
-    //Supprimer l'employé du Local storage
-    const id = e.target.parentElement.parentElement.childNodes[1].textContent;
-    Stockage.supprimerEmploye(id);
-  }
-});

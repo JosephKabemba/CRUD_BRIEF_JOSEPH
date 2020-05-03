@@ -50,3 +50,15 @@ h1 {
   color: tomato;
   cursor: pointer;
 }
+
+.btnModifier{
+  cursor: pointer;
+}
+
+/* Changement de la couleur d'arrière-plan par défaut de Bootstrap au 
+   survol de la souris
+*/
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #7468a0;
+}
